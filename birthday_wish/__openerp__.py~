@@ -1,0 +1,30 @@
+
+{
+    'name':'Academic Module',
+    'version':'1.0',
+    'author':'Medma',
+    'category':'Human Resourse',
+    'website':'http://www.medma.net',
+    'description':"""Employee data Management""",
+    'data':['data/company_data.xml',
+            'data/employee_data.xml',
+            'view/medma_view.xml',
+            'leave_data.xml',
+            'security/ir.model.access.csv',
+            'security/security.xml',
+            'report/print_task_summary_report.xml',
+            'report/report_task_summary_report.xml',
+            'report/work_detail_summary_report_view.xml',
+            'wizard/print_work_details.xml',
+            'wizard/project_task_summary_view.xml',
+            'view/report_medma.xml'],
+    'demo': [],
+    'depends': ['hr', 'hr_attendance', 'hr_holidays','project'],
+    'qweb': ['static/src/xml/*.xml'],
+    'css': ['static/src/css/*.css'],
+    'js': ['static/src/js/*.js'],
+    'active':'False',
+    'installable':'True',
+}
+
+
