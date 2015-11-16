@@ -31,7 +31,7 @@ class base_config_settings(osv.osv_memory):
     _inherit = 'base.config.settings'
         
     _columns = {
-        'birthday_mail_template': fields.many2one('email.template', 'Birthday Wishes Template', required=True,
+        'birthday_mail_template': fields.many2one('mail.template', 'Birthday Wishes Template', required=True,
             help='This will set the default mail template for birthday wishes.'),
 
     }
