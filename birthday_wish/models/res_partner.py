@@ -37,18 +37,18 @@ class res_partner(osv.osv):
 
     def send_birthday_email(self, cr, uid, ids=None, context=None):
         partner_obj = self.pool.get('res.partner')
-        temp_obj = self.pool.get('email.template')
-        group_obj = self.pool.get('mail.group')
+        temp_obj = self.pool.get('mail.template')
+        channel_obj = self.pool.get('mail.channel')
         wish_template_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'birthday_wish', 'email_template_birthday_wish')[1]
-        group_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'birthday_wish', 'group_birthday')[1]
+        channel_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'birthday_wish', 'channel_birthday')[1]
         today = datetime.now()
         today_month_day = '%-' + today.strftime('%m') + '-' + today.strftime('%d')
         partner_ids = partner_obj.search(cr, uid, [('birth_date', 'like', today_month_day)])
         if partner_ids:
-            for partner_id in partner_obj.browse(cr, uid, partner_ids,context=context):
+            for partner_id in partner_obj.browse(cr, uid, partner_ids, context=context):
                 if partner_id.email:
                     temp_obj.send_mail(cr, uid, partner_id.company_id.birthday_mail_template and partner_id.company_id.birthday_mail_template.id or wish_template_id,
                                    partner_id.id, force_send=True, context=context)
-                group_obj.message_post(cr, uid, group_id, body=_('Happy Birthday Dear %s.') % (partner_id.name), partner_ids=[partner_id.id], context=context)
+                res = channel_obj.message_post(cr, uid, channel_id, body=_('Happy Birthday Dear %s.') % (partner_id.name), partner_ids=[partner_id.id], context=context)
                 self.message_post(cr, uid, partner_id.id, body=_('Happy Birthday.'), context=context)
         return None

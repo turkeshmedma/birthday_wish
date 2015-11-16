@@ -29,7 +29,7 @@ from openerp.tools.translate import _
 class res_company(osv.osv):
     _inherit = 'res.company'
     _columns = {
-        'birthday_mail_template': fields.many2one('email.template', 'Birthday Wishes Template',
+        'birthday_mail_template': fields.many2one('mail.template', 'Birthday Wishes Template',
                 help="This will set the default mail template for birthday wishes."),
     }
 

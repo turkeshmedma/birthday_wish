@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record id="email_template_birthday_wish" model="email.template">
+        <record id="email_template_birthday_wish" model="mail.template">
             <field name="name">Birthday Wish</field>
             <field name="model_id" ref="model_res_partner"/>
             <field name="email_from">${(user.email)|safe}</field>
@@ -15,7 +15,7 @@
             </field>
         </record>
         
-        <record model="mail.group" id="group_birthday">
+        <record model="mail.channel" id="channel_birthday">
             <field name="name">Birthday Wishes</field>
             <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>
             <field name="description">Birthday notifications.</field>
