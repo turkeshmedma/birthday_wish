@@ -23,34 +23,32 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, orm, fields
-from openerp.addons.base.ir.ir_qweb import HTMLSafe
+from openerp import api, fields, models, _
 from datetime import datetime, timedelta, time
-from openerp.tools.translate import _
 
-class res_partner(osv.osv):
+class res_partner(models.Model):
+    _name = 'res.partner'
     _inherit = 'res.partner'
 
-    _columns = {
-        'birth_date': fields.date('Birthdate'),
-    }
+    birth_date = fields.Date(string='Birthdate')
 
-    def send_birthday_email(self, cr, uid, ids=None, context=None):
-        partner_obj = self.pool.get('res.partner')
-        temp_obj = self.pool.get('mail.template')
-        message_obj = self.pool.get('mail.message')
-        channel_obj = self.pool.get('mail.channel')
-        wish_template_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'birthday_wish', 'email_template_birthday_wish')[1]
-        channel_id = self.pool['ir.model.data'].get_object_reference(cr, uid, 'birthday_wish', 'channel_birthday')[1]
+    @api.model
+    def send_birthday_email(self):
+        partner_obj = self.env['res.partner']
+        temp_obj = self.env['mail.template']
+        message_obj = self.env['mail.message']
+        channel_obj = self.env['mail.channel']
+        wish_template_id = self.env['ir.model.data'].get_object('birthday_wish', 'email_template_birthday_wish')
+        channel_id = self.env['ir.model.data'].get_object('birthday_wish', 'channel_birthday')
         today = datetime.now()
         today_month_day = '%-' + today.strftime('%m') + '-' + today.strftime('%d')
-        partner_ids = partner_obj.search(cr, uid, [('birth_date', 'like', today_month_day)])
+        partner_ids = partner_obj.search([('birth_date', 'like', today_month_day)])
         if partner_ids:
-            for partner_id in partner_obj.browse(cr, uid, partner_ids, context=context):
+            for partner_id in partner_ids:
                 if partner_id.email:
-                    temp_obj.send_mail(cr, uid, partner_id.company_id.birthday_mail_template and partner_id.company_id.birthday_mail_template.id or wish_template_id,
-                                   partner_id.id, force_send=True, context=context)
-                res = channel_obj.message_post(cr, uid, channel_id, body=_('Happy Birthday Dear %s.') % (partner_id.name), partner_ids=[partner_id.id], context=context)
-                message_obj.write(cr, uid, res, {'channel_ids':[[6, False, [channel_id]]]}, context=context)
-                self.message_post(cr, uid, [partner_id.id], body=_('Happy Birthday.'), context=context)
+                    template = partner_id.company_id.birthday_mail_template or wish_template_id
+                    template.send_mail(partner_id.id, force_send=True)
+                res = channel_id.message_post(body=_('Happy Birthday Dear %s.') % (partner_id.name), partner_ids=[partner_id.id])
+                res.write({'channel_ids':[[6, False, [channel_id.id]]]})
+                partner_id.message_post(body=_('Happy Birthday.'))
         return None

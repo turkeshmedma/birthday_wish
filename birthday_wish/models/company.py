@@ -23,15 +23,12 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from openerp import api, fields, models, _
 
-class res_company(osv.osv):
+class res_company(models.Model):
     _inherit = 'res.company'
-    _columns = {
-        'birthday_mail_template': fields.many2one('mail.template', 'Birthday Wishes Template',
-                help="This will set the default mail template for birthday wishes."),
-    }
 
+    birthday_mail_template = fields.Many2one('mail.template', string='Birthday Wishes Template',
+                                             help="This will set the default mail template for birthday wishes.")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
