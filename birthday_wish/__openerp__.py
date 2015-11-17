@@ -41,7 +41,7 @@
         'data/wish_cronjob.xml',
     ],
     'images': [
-        'static/description/banner.png',
+        'static/description/banner.jpg',
     ],
     "installable": True,
     "auto_install": False,
