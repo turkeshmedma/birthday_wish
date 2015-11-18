@@ -24,7 +24,7 @@
 ##############################################################################
 
 from openerp import api, fields, models, _
-from datetime import datetime, timedelta, time
+from datetime import datetime
 
 class res_partner(models.Model):
     _name = 'res.partner'
@@ -35,9 +35,6 @@ class res_partner(models.Model):
     @api.model
     def send_birthday_email(self):
         partner_obj = self.env['res.partner']
-        temp_obj = self.env['mail.template']
-        message_obj = self.env['mail.message']
-        channel_obj = self.env['mail.channel']
         wish_template_id = self.env['ir.model.data'].get_object('birthday_wish', 'email_template_birthday_wish')
         channel_id = self.env['ir.model.data'].get_object('birthday_wish', 'channel_birthday')
         today = datetime.now()
