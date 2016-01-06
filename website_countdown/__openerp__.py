@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
@@ -7,6 +7,7 @@
 #    Medma Infomatix (info@medma.net)
 #
 #    Coded by: Turkesh Patel (turkesh.patel@medma.in)
+#    Coded by: Virali Chauhan (virali@medma.in)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,12 +24,20 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-
-class res_company(models.Model):
-    _inherit = 'res.company'
-
-    birthday_mail_template = fields.Many2one('mail.template', string='Birthday Wishes Template',
-                                             help="This will set the default mail template for birthday wishes.")
+{
+    'name': 'Countdown',
+    'version': '1.0',
+    'category': 'Website',
+    'summary': 'Website Countdown Widget',
+    'description':"""Countdown""",
+    'author': 'Medma Infomatix',
+    'depends': ['website'],
+    'website': '',
+    'data': ['views/countdown.xml', 'views/templates.xml'],
+    'demo_xml': [],
+    'css': [ '*.css' ],
+    'js': ['*.js' ],
+    'installable': True,
+}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

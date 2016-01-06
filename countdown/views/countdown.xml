@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <template id="countdown">
+            <div class="countdown">
+                <div class="main-example">
+                    <div class="home-welcome" id="main-example" t-att-value="countdown_date">
+                        <div class="time days flip">
+                          <span class="count next top"></span>
+                          <span class="count next bottom"></span>
+                          <span class="label">days</span>
+                        </div>
+                        
+                        <div class="time hours flip">
+                          <span class="count curr top"></span>
+                          <span class="count next top"></span>
+                          <span class="count next bottom"></span>
+                          <span class="count curr bottom"></span>
+                          <span class="label">hours</span>
+                        </div>
+                        
+                        <div class="time minutes flip">
+                          <span class="count curr top"></span>
+                          <span class="count next top"></span>
+                          <span class="count next bottom"></span>
+                          <span class="count curr bottom"></span>
+                          <span class="label">min</span>
+                        </div>
+                        
+                        <div class="time seconds flip">
+                          <span class="count curr top">00</span>
+                          <span class="count next top">27</span>
+                          <span class="count next bottom">27</span>
+                          <span class="count curr bottom">00</span>
+                          <span class="label">sec</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+   </data>
+</openerp>
